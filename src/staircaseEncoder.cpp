@@ -67,12 +67,13 @@ namespace SATABP
                     std::cout << -(GetEncodedAuxVar(2 * s * k + ii)) << " " << GetEncodedAuxVar(2 * s * k + ii + 1) << std::endl;
             }
 
-            for (int iii = 0; iii <= k - 2; iii++)
-            {
-                cc->add_clause({-(s * k + iii + 1), -(GetEncodedAuxVar(2 * s * k + k - 1 - iii))});
-                if (isDebugMode)
-                    std::cout << -(s * k + iii + 1) << " " << -(GetEncodedAuxVar(2 * s * k + k - 1 - iii)) << std::endl;
-            }
+            if (s == 0)
+                for (int iii = 0; iii <= k - 2; iii++)
+                {
+                    cc->add_clause({-(s * k + iii + 1), -(GetEncodedAuxVar(2 * s * k + k - 1 - iii))});
+                    if (isDebugMode)
+                        std::cout << -(s * k + iii + 1) << " " << -(GetEncodedAuxVar(2 * s * k + k - 1 - iii)) << std::endl;
+                }
 
             if (isDebugMode)
                 std::cout << "Right block \n";
@@ -130,12 +131,13 @@ namespace SATABP
                     std::cout << -(GetEncodedAuxVar(2 * s * k + ii)) << " " << GetEncodedAuxVar(2 * s * k + ii + 1) << std::endl;
             }
 
-            for (int iii = 0; iii <= k - 2; iii++)
-            {
-                cc->add_clause({-(s * k + iii + 1), -(GetEncodedAuxVar(2 * s * k + k - 1 - iii))});
-                if (isDebugMode)
-                    std::cout << -(s * k + iii + 1) << " " << -(GetEncodedAuxVar(2 * s * k + k - 1 - iii)) << std::endl;
-            }
+            if (s == 0)
+                for (int iii = 0; iii <= k - 2; iii++)
+                {
+                    cc->add_clause({-(s * k + iii + 1), -(GetEncodedAuxVar(2 * s * k + k - 1 - iii))});
+                    if (isDebugMode)
+                        std::cout << -(s * k + iii + 1) << " " << -(GetEncodedAuxVar(2 * s * k + k - 1 - iii)) << std::endl;
+                }
 
             int limit = n % k;
             if (limit == 0)
