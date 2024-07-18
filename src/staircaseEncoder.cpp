@@ -191,6 +191,10 @@ namespace SATABP
         if (isDebugMode)
             cc->print_dimacs();
 
+        std::cout << "Staircase " << n << " variables, " << w << " width: \n";
+        std::cout << "Number vars: " << cc->vhSize() << std::endl;
+        std::cout << "Number clauses: " << cc->size() << std::endl;
+        std::cout << std::endl;
         if (isDebugMode)
             std::cout << "\nStaircase visualization:\n";
         for (int l = 1; l <= (int)n - k + 1; l++)
