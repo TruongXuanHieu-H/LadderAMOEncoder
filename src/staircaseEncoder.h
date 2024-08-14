@@ -14,11 +14,13 @@ namespace SATABP
     virtual ~StaircaseEncoder();
 
     void encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[]);
-    int GetEncodedAuxVar(int symbolicAuxVar);
+    void encode_window(int window, int n, int w);
+    void glue_window(int window, int n, int w);
+    int get_aux_var(int first, int last);
 
     ClauseContainer *cc;
     VarHandler *vh;
-    std::map<int, int> auxVarConverter = {};
+    std::map<std::pair<int, int>, int> aux_vars;
   };
 }
 

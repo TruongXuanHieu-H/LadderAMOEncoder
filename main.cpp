@@ -40,27 +40,40 @@ int main(int argc, char **argv)
     signal_SIGTERM = signal(SIGTERM, SIGINT_exit);
     signal_SIGABRT = signal(SIGABRT, SIGINT_exit);
 
-    // First argument
+    // // First argument
+    // int numberVars = atoi(argv[1]); // Convert first argument to int
+
+    // // Second argument
+    // int windowsWidth = atoi(argv[2]); // Convert second argument to int
+
+    // // Third argument
+    // int numberInitConds = atoi(argv[3]);
+    // int initConds[numberInitConds];
+
+    // VarHandler *vh = new VarHandler(1, numberVars);
+    // ClauseContainer *cc = new ClauseVector(vh, 0);
+
+    // StaircaseEncoder *abw_enc = new StaircaseEncoder(cc, vh);
+
+    // for (int i = 0; i < numberInitConds; i++)
+    // {
+    //     initConds[i] = atoi(argv[4 + i]);
+    // }
+
+    // abw_enc->encode_and_solve_staircase(numberVars, windowsWidth, numberInitConds, initConds);
+
+    // delete abw_enc;
+
+    // Take the first argument as number of variables
+    // Then encode using width of [2, numVars/2]
     int numberVars = atoi(argv[1]); // Convert first argument to int
-
-    // Second argument
-    int windowsWidth = atoi(argv[2]); // Convert second argument to int
-
-    // Third argument
-    int numberInitConds = atoi(argv[3]);
-    int initConds[numberInitConds];
-
-    VarHandler *vh = new VarHandler(1, numberVars);
-    ClauseContainer *cc = new ClauseVector(vh, 0);
-
-    StaircaseEncoder *abw_enc = new StaircaseEncoder(cc, vh);
-
-    for (int i = 0; i < numberInitConds; i++)
+    for (int i = 2; i <= numberVars / 2; i++)
     {
-        initConds[i] = atoi(argv[4 + i]);
-    }
+        VarHandler *vh = new VarHandler(1, numberVars);
+        ClauseContainer *cc = new ClauseVector(vh, 0);
 
-    abw_enc->encode_and_solve_staircase(numberVars, windowsWidth, numberInitConds, initConds);
-
-    delete abw_enc;
+        StaircaseEncoder *abw_enc = new StaircaseEncoder(cc, vh);
+        abw_enc->encode_and_solve_staircase(numberVars, i, 0, {});
+        delete abw_enc;
+    };
 }
