@@ -53,7 +53,7 @@ namespace SINGLESTAIR
     void StaircaseEncoder::lookup_bounds(int &lb, int &ub)
     {
         lb = 2;
-        ub = n - 1;
+        ub = n;
     }
 
     void StaircaseEncoder::encode_and_solve_stair_problem(int start_w, int stop_w, int step, int prev_res)
