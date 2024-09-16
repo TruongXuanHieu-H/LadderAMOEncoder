@@ -2,7 +2,7 @@
 #include <iostream>
 #include <assert.h>
 
-namespace SATABP
+namespace SINGLESTAIR
 {
 
     ClauseContainer::ClauseContainer(VarHandler *v, unsigned split_limit) : vh(v), split_size(split_limit)
@@ -13,7 +13,7 @@ namespace SATABP
             do_split = true;
     };
 
-    ClauseContainer::~ClauseContainer(){};
+    ClauseContainer::~ClauseContainer() {};
 
     void ClauseContainer::add_clause(const Clause &c)
     {
@@ -59,58 +59,4 @@ namespace SATABP
     {
         return do_vh_size();
     };
-
-    ClauseVector::ClauseVector(VarHandler *v, int split_size)
-        : ClauseContainer(v, split_size)
-    {
-        clause_list = std::vector<Clause>();
-    };
-
-    ClauseVector::~ClauseVector(){};
-
-    void ClauseVector::do_add_clause(const Clause &c)
-    {
-        clause_list.push_back(c);
-    };
-
-    unsigned ClauseVector::do_size() const
-    {
-        return clause_list.size();
-    };
-
-    int ClauseVector::do_vh_size() const
-    {
-        return vh->size();
-    };
-
-    void ClauseVector::do_print_dimacs() const
-    {
-        std::cout << "p cnf " << vh->size() << " " << size() << std::endl;
-        for (auto const &c : clause_list)
-        {
-            for (auto const &l : c)
-            {
-                std::cout << l << " ";
-            }
-            std::cout << "0" << std::endl;
-        }
-    };
-
-    void ClauseVector::do_print_clauses() const
-    {
-        for (auto const &c : clause_list)
-        {
-            for (auto const &l : c)
-            {
-                std::cout << l << " ";
-            }
-            std::cout << "0" << std::endl;
-        }
-    };
-
-    void ClauseVector::do_clear()
-    {
-        clause_list.clear();
-    };
-
 }

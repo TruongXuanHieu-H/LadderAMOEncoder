@@ -4,7 +4,7 @@
 #include "utils.h"
 #include <vector>
 
-namespace SATABP
+namespace SINGLESTAIR
 {
 
   typedef std::vector<int> Clause;
@@ -41,22 +41,6 @@ namespace SATABP
     virtual void do_clear() = 0;
     virtual void do_print_clauses() const = 0;
   };
-
-  class ClauseVector : public ClauseContainer
-  {
-  public:
-    ClauseVector(VarHandler *, int split_size);
-    virtual ~ClauseVector();
-
-  private:
-    void do_add_clause(const Clause &c) final;
-    unsigned do_size() const final;
-    int do_vh_size() const final;
-    void do_print_dimacs() const final;
-    void do_clear() final;
-    void do_print_clauses() const final;
-  };
-
 }
 
 #endif

@@ -1,17 +1,20 @@
-#include "staircaseEncoder.h"
+#include "ladder_encoder.h"
 #include <iostream>
 #include <math.h>
+#include "utils.h"
 
-namespace SATABP
+namespace SINGLESTAIR
 {
 
-    StaircaseEncoder::StaircaseEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : cc(clause_container), vh(var_handler) {};
+    LadderEncoder::LadderEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : Encoder(clause_container, var_handler)
+    {
+    }
 
-    StaircaseEncoder::~StaircaseEncoder() {};
+    LadderEncoder::~LadderEncoder() {};
 
-    bool is_debug_mode = true;
+    bool is_debug_mode = false;
 
-    int StaircaseEncoder::get_aux_var(int first, int last)
+    int LadderEncoder::get_aux_var(int first, int last)
     {
 
         auto pair = aux_vars.find({first, last});
@@ -27,7 +30,7 @@ namespace SATABP
         return new_aux_var;
     }
 
-    void StaircaseEncoder::encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[])
+    void LadderEncoder::encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[])
     {
         (void)initCondLength;
         (void)initCond;
@@ -41,11 +44,6 @@ namespace SATABP
         {
             glue_window(gw, n, w);
         }
-
-        std::cout << "Staircase " << n << " variables, " << w << " width: \n";
-        std::cout << "Number vars: " << cc->vhSize() << std::endl;
-        std::cout << "Number clauses: " << cc->size() << std::endl;
-        std::cout << std::endl;
 
         if (is_debug_mode)
             std::cout << "\nPrint dimacs:\n";
@@ -76,7 +74,6 @@ namespace SATABP
                 }
             }
         }
-        std::cout << "=========================================================\n\n";
     }
 
     /*
@@ -89,7 +86,7 @@ namespace SATABP
      * n : number of variables
      * w : width of window
      */
-    void StaircaseEncoder::encode_window(int window, int n, int w)
+    void LadderEncoder::encode_window(int window, int n, int w)
     {
         if (window == 0)
         {
@@ -260,7 +257,7 @@ namespace SATABP
      * n : number of variables
      * w : width of window
      */
-    void StaircaseEncoder::glue_window(int window, int n, int w)
+    void LadderEncoder::glue_window(int window, int n, int w)
     {
         /*  The stair look like this:
          *      Window 1        Window 2        Window 3        Window 4
