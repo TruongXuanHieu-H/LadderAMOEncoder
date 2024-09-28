@@ -8,6 +8,9 @@
 #include "ladder_encoder.h"
 #include "duplex_encoder.h"
 #include "product_encoder.h"
+#include "reduced_encoder.h"
+#include "naive_encoder.h"
+#include "seq_encoder.h"
 
 namespace SINGLESTAIR
 {

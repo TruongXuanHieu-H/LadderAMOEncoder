@@ -104,12 +104,15 @@ namespace SINGLESTAIR
         {
         case naive:
             std::cout << "c Initializing a NAIVE encoder with n = " << n << "." << std::endl;
+            enc = new NaiveEncoder(cc, vh);
             break;
         case reduced:
             std::cout << "c Initializing a REDUCED encoder with n = " << n << "." << std::endl;
+            enc = new ReducedEncoder(cc, vh);
             break;
         case seq:
             std::cout << "c Initializing a SEQ encoder with n = " << n << "." << std::endl;
+            enc = new SeqEncoder(cc, vh);
             break;
         case BDD:
             std::cout << "c Initializing a BDD encoder with n = " << n << "." << std::endl;
