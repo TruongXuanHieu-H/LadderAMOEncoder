@@ -14,6 +14,8 @@ namespace SINGLESTAIR
         Encoder(Encoder const &) = delete;
         Encoder &operator=(Encoder const &) = delete;
 
+        bool is_debug_mode = false;
+
         virtual void encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[]) = 0;
 
         ClauseContainer *cc;

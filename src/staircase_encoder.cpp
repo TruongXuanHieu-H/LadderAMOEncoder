@@ -1,6 +1,7 @@
 #include "staircase_encoder.h"
 
 #include <iostream>
+#include <fstream>
 #include <assert.h>
 #include <chrono>
 
@@ -98,25 +99,35 @@ namespace SINGLESTAIR
 
     void StaircaseEncoder::setup_encoder()
     {
+
         switch (enc_choice)
         {
         case naive:
+            std::cout << "c Initializing a NAIVE encoder with n = " << n << "." << std::endl;
             break;
         case reduced:
+            std::cout << "c Initializing a REDUCED encoder with n = " << n << "." << std::endl;
             break;
         case seq:
+            std::cout << "c Initializing a SEQ encoder with n = " << n << "." << std::endl;
             break;
         case BDD:
+            std::cout << "c Initializing a BDD encoder with n = " << n << "." << std::endl;
             break;
         case product:
+            std::cout << "c Initializing a Product encoder with n = " << n << "." << std::endl;
+            enc = new ProductEncoder(cc, vh);
             break;
         case duplex:
+            std::cout << "c Initializing a Duplex encoder with n = " << n << "." << std::endl;
+            enc = new DuplexEncoder(cc, vh);
             break;
         case ladder:
             std::cout << "c Initializing a Ladder encoder with n = " << n << "." << std::endl;
             enc = new LadderEncoder(cc, vh);
             break;
         default:
+            std::cout << "c Initializing a null encoder with n = " << n << "." << std::endl;
             break;
         }
     }
@@ -143,9 +154,9 @@ namespace SINGLESTAIR
         auto t1 = std::chrono::high_resolution_clock::now();
         enc->encode_staircase(n, w);
         auto t2 = std::chrono::high_resolution_clock::now();
-        auto encode_duration = std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
+        auto encode_duration = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
 
-        std::cout << "c\tEncoding duration: " << encode_duration << "s" << std::endl;
+        std::cout << "c\tEncoding duration: " << encode_duration << "ns" << std::endl;
         std::cout << "c\tNumber of clauses: " << cc->size() << std::endl;
         std::cout << "c\tNumber of irredundant clauses: " << solver->irredundant() << std::endl;
         std::cout << "c\tNumber of variables: " << vh->size() << std::endl;
@@ -154,8 +165,8 @@ namespace SINGLESTAIR
         t1 = std::chrono::high_resolution_clock::now();
         SAT_res = solver->solve();
         t2 = std::chrono::high_resolution_clock::now();
-        auto solving_duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
-        std::cout << "c\tSolving duration: " << solving_duration << " ms" << std::endl;
+        auto solving_duration = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+        std::cout << "c\tSolving duration: " << solving_duration << " ns" << std::endl;
         std::cout << "c\tAnswer: " << std::endl;
         if (SAT_res == 10)
         {
@@ -169,6 +180,13 @@ namespace SINGLESTAIR
             cleanup_solving();
             return 1;
         }
+
+        std::ofstream outFile;
+        outFile.open(encode_type_map.find(enc_choice)->second + "_report.txt", std::ios::app);
+        if (!outFile)
+            return 1;
+        outFile << w << ": " << solving_duration << " ns" << std::endl;
+        outFile.close();
 
         cleanup_solving();
 

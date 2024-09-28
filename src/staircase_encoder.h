@@ -6,6 +6,8 @@
 #include "clause_cont.h"
 #include "cadical_clauses.h"
 #include "ladder_encoder.h"
+#include "duplex_encoder.h"
+#include "product_encoder.h"
 
 namespace SINGLESTAIR
 {
@@ -19,6 +21,15 @@ namespace SINGLESTAIR
         duplex,
         ladder,
     };
+
+    const std::unordered_map<EncodeType, std::string> encode_type_map = {
+        {naive, "naive"},
+        {reduced, "reduced"},
+        {seq, "seq"},
+        {BDD, "BDD"},
+        {product, "product"},
+        {duplex, "duplex"},
+        {ladder, "ladder"}};
 
     class StaircaseEncoder
     {

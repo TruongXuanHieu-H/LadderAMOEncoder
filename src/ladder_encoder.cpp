@@ -12,8 +12,6 @@ namespace SINGLESTAIR
 
     LadderEncoder::~LadderEncoder() {};
 
-    bool is_debug_mode = false;
-
     int LadderEncoder::get_aux_var(int first, int last)
     {
 
@@ -43,36 +41,6 @@ namespace SINGLESTAIR
         for (int gw = 0; gw < ceil((float)n / w) - 1; gw++)
         {
             glue_window(gw, n, w);
-        }
-
-        if (is_debug_mode)
-            std::cout << "\nPrint dimacs:\n";
-        if (is_debug_mode)
-            cc->print_dimacs();
-        if (is_debug_mode)
-            std::cout << "\nStaircase visualization:\n";
-        for (int l = 1; l <= (int)n - w + 1; l++)
-        {
-            for (int i = 0; i < l - 1; i++)
-            {
-                if (is_debug_mode)
-                    std::cout << "\t";
-            }
-            for (int ll = l; ll <= l + w - 1; ll++)
-            {
-                if (is_debug_mode)
-                    std::cout << ll;
-                if (ll < l + w - 1)
-                {
-                    if (is_debug_mode)
-                        std::cout << " +\t";
-                }
-                else
-                {
-                    if (is_debug_mode)
-                        std::cout << "\t<= 1\n";
-                }
-            }
         }
     }
 
