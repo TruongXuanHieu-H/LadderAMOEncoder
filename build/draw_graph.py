@@ -38,11 +38,11 @@ x6, y6 = read_data(filename6, 5)
 
 
 # Plot the data
-plt.figure(figsize=(10, 6))
-# plt.plot(x4, y4, linestyle=':', color='blue', label="Reduced")
-plt.plot(x6, y6, linestyle='--', color='orange', label="Seq")
+plt.figure(figsize=(10, 50))
+plt.plot(x4, y4, linestyle=':', color='blue', label="Reduced")
+# plt.plot(x6, y6, linestyle='--', color='orange', label="Seq")
 # plt.plot(x5, y5, linestyle='-', color='green', label="Naive")
-plt.plot(x3, y3, linestyle=':', color='red', label="Product")
+# plt.plot(x3, y3, linestyle=':', color='red', label="Product")
 plt.plot(x2, y2, linestyle='--', color='magenta', label="Duplex")
 plt.plot(x1, y1, linestyle='-', color='black', label="Ladder", linewidth=2)
 plt.legend()

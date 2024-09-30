@@ -43,7 +43,7 @@ def duplex(x):
 
 
 def ladder(x):
-    return np.ceil(n(x) / x) * (2 * x - 3)
+    return (np.ceil(n(x) / x)-1) * (2 * x - 3)
 
 
 # Generate x values
