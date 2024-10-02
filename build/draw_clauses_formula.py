@@ -49,11 +49,11 @@ def product(x):
 def duplex(x):
     return 13 * np.ceil(n(x) / x) * x - 14 * np.ceil(n(x) / x) - 3 * x + 2
 
-# Define the ladder expression
+# Define the SCL expression
 
 
 def ladder(x):
-    return 8 * np.ceil(n(x) / x) * x - 8 * np.ceil(n(x) / x) - 8 * x + 8
+    return 8 * np.ceil(n(x) / x) * x - 8 * np.ceil(n(x) / x) - 7 * x + 7
 
 
 # Generate x values
@@ -69,19 +69,23 @@ duplex_values = duplex(x_values)
 ladder_values = ladder(x_values)
 
 # Create the plot
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(10, 10))
 plt.plot(x_values, reduced_values, linestyle=':',
-         label="Reduced", color='blue')
-plt.plot(x_values, seq_values, linestyle='--', label="Seq", color='orange')
-plt.plot(x_values, naive_values, linestyle='-', label="Naive", color='green')
-plt.plot(x_values, bdd_values, linestyle='-.', label="BDD", color='purple')
-plt.plot(x_values, product_values, linestyle=':', label="Product", color='red')
+         label="Reduced", color='blue', linewidth=2)
+plt.plot(x_values, seq_values, linestyle='--',
+         label="Seq", color='orange', linewidth=2)
+plt.plot(x_values, naive_values, linestyle='-',
+         label="Naive", color='green', linewidth=2)
+plt.plot(x_values, bdd_values, linestyle='-.',
+         label="BDD", color='purple', linewidth=2)
+plt.plot(x_values, product_values, linestyle=':',
+         label="Product", color='red', linewidth=2)
 plt.plot(x_values, duplex_values, linestyle='--',
-         label="Duplex", color='magenta')
+         label="Duplex", color='magenta', linewidth=2)
 plt.plot(x_values, ladder_values, linestyle='-',
-         label="Ladder", color='black', linewidth=3)
+         label="SCL", color='black', linewidth=2)
 
-plt.xlabel('w')
+plt.xlabel('#Width')
 plt.ylabel('#Clauses')
 plt.axhline(0, color='black', linewidth=0.5, ls='--')
 plt.axvline(0, color='black', linewidth=0.5, ls='--')

@@ -39,11 +39,11 @@ def product(x):
 def duplex(x):
     return 4 * np.ceil(n(x) / x) * (x - 1)
 
-# Define the ladder expression
+# Define the SCL expression
 
 
 def ladder(x):
-    return (np.ceil(n(x) / x)-1) * (2 * x - 3)
+    return 2 * np.ceil(n(x) / x) * x - 3 * np.ceil(n(x) / x) - 2 * x + 4
 
 
 # Generate x values
@@ -57,13 +57,16 @@ duplex_values = duplex(x_values)
 ladder_values = ladder(x_values)
 
 plt.figure(figsize=(10, 6))
-plt.plot(x_values, seq_values, linestyle='--', label="Seq", color='orange')
-plt.plot(x_values, bdd_values, linestyle='-.', label="BDD", color='purple')
-plt.plot(x_values, product_values, linestyle=':', label="Product", color='red')
+plt.plot(x_values, seq_values, linestyle='--',
+         label="Seq", color='orange', linewidth=2)
+plt.plot(x_values, bdd_values, linestyle='-.',
+         label="BDD", color='purple', linewidth=2)
+plt.plot(x_values, product_values, linestyle=':',
+         label="Product", color='red', linewidth=2)
 plt.plot(x_values, duplex_values, linestyle='--',
-         label="Duplex", color='magenta')
+         label="Duplex", color='magenta', linewidth=2)
 plt.plot(x_values, ladder_values, linestyle='-',
-         label="Ladder", color='black', linewidth=3)
+         label="SCL", color='black', linewidth=2)
 
 plt.xlabel('w')
 plt.ylabel('#AuxVars')

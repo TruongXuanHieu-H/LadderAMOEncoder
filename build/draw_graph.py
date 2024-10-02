@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 
 # Function to read data from the file
 
@@ -13,11 +14,16 @@ def read_data(filename, step):
             if len(parts) == 2:
                 # Extract the number and time
                 number = int(parts[0])
-                time = int(parts[1].replace(' ns', '').strip())
+                timens = int(parts[1].replace(' ns', '').strip())
+                timems = round(timens / 1000000, 2)
                 if number % step == 0:
                     x.append(number)
-                    y.append(time)
+                    y.append(timems)
     return x, y
+
+
+def thousands_formatter(x, pos):
+    return f'{x * 1e-5:.1f}'
 
 
 # File name
@@ -39,14 +45,16 @@ x6, y6 = read_data(filename6, 5)
 
 # Plot the data
 plt.figure(figsize=(10, 50))
-plt.plot(x4, y4, linestyle=':', color='blue', label="Reduced")
-# plt.plot(x6, y6, linestyle='--', color='orange', label="Seq")
-# plt.plot(x5, y5, linestyle='-', color='green', label="Naive")
-# plt.plot(x3, y3, linestyle=':', color='red', label="Product")
-plt.plot(x2, y2, linestyle='--', color='magenta', label="Duplex")
-plt.plot(x1, y1, linestyle='-', color='black', label="Ladder", linewidth=2)
+plt.plot(x4, y4, linestyle=':', color='blue', label="Reduced", linewidth=2)
+# plt.plot(x6, y6, linestyle='--', color='orange', label="Seq", linewidth=2)
+# plt.plot(x5, y5, linestyle='-', color='green', label="Naive", linewidth=2)
+# plt.plot(x3, y3, linestyle=':', color='red', label="Product", linewidth=2)
+plt.plot(x2, y2, linestyle='--', color='magenta', label="Duplex", linewidth=2)
+plt.plot(x1, y1, linestyle='-', color='black', label="SCL", linewidth=2)
+# plt.gca().yaxis.set_major_formatter(FuncFormatter(thousands_formatter))
 plt.legend()
-plt.xlabel('w')
-plt.ylabel('Time (ns)')
+plt.xlabel('#Width')
+plt.ylabel('#Time (ms)')
 plt.grid(True)
+plt.tight_layout()
 plt.show()
