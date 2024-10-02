@@ -44,11 +44,11 @@ x6, y6 = read_data(filename6, 5)
 
 
 # Plot the data
-plt.figure(figsize=(10, 50))
+plt.figure(figsize=(10, 10))
 plt.plot(x4, y4, linestyle=':', color='blue', label="Reduced", linewidth=2)
-# plt.plot(x6, y6, linestyle='--', color='orange', label="Seq", linewidth=2)
-# plt.plot(x5, y5, linestyle='-', color='green', label="Naive", linewidth=2)
-# plt.plot(x3, y3, linestyle=':', color='red', label="Product", linewidth=2)
+plt.plot(x6, y6, linestyle='--', color='orange', label="Seq", linewidth=2)
+plt.plot(x5, y5, linestyle='-', color='green', label="Naive", linewidth=2)
+plt.plot(x3, y3, linestyle=':', color='red', label="Product", linewidth=2)
 plt.plot(x2, y2, linestyle='--', color='magenta', label="Duplex", linewidth=2)
 plt.plot(x1, y1, linestyle='-', color='black', label="SCL", linewidth=2)
 # plt.gca().yaxis.set_major_formatter(FuncFormatter(thousands_formatter))

@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 
 # Define n(x)
 
@@ -13,13 +14,11 @@ def n(x):
 def N(x):
     return n(x) - x + 1
 
-
 # Define the seq expression
 
 
 def seq(x):
     return N(x) * (x - 2)
-
 
 # Define the BDD expression
 
@@ -56,7 +55,15 @@ product_values = product(x_values)
 duplex_values = duplex(x_values)
 ladder_values = ladder(x_values)
 
-plt.figure(figsize=(10, 6))
+# Custom formatter for y-axis
+
+
+def custom_formatter(y, pos):
+    return f'{y * 1e-4:.0f}'  # Format the y value
+
+
+# Create the plot
+plt.figure(figsize=(10, 10))
 plt.plot(x_values, seq_values, linestyle='--',
          label="Seq", color='orange', linewidth=2)
 plt.plot(x_values, bdd_values, linestyle='-.',
@@ -68,11 +75,21 @@ plt.plot(x_values, duplex_values, linestyle='--',
 plt.plot(x_values, ladder_values, linestyle='-',
          label="SCL", color='black', linewidth=2)
 
-plt.xlabel('w')
+# Setting labels and grid
+plt.xlabel('#Width')
 plt.ylabel('#AuxVars')
 plt.axhline(0, color='black', linewidth=0.5, ls='--')
 plt.axvline(0, color='black', linewidth=0.5, ls='--')
 plt.grid()
+
+# Set y-axis limits
+plt.ylim(0, 55000)
+
+# Apply the custom formatter to the y-axis
+plt.gca().yaxis.set_major_formatter(FuncFormatter(custom_formatter))
+plt.text(y=1, x=0, s='e+04', va='bottom',
+         ha='center', transform=plt.gca().transAxes)
+plt.tight_layout()
+
 plt.legend()
-plt.ylim(0, 50000)
 plt.show()
