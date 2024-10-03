@@ -1,1 +1,1 @@
-# StaircaseEncoderCompactV1
+# StaircaseEncoderSCL
