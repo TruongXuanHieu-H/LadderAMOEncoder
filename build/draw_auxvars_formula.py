@@ -63,7 +63,7 @@ def custom_formatter(y, pos):
 
 
 # Create the plot
-plt.figure(figsize=(10, 10))
+# plt.figure(figsize=(10, 10))
 plt.plot(x_values, seq_values, linestyle='--',
          label="Seq", color='orange', linewidth=2)
 plt.plot(x_values, bdd_values, linestyle='-.',
