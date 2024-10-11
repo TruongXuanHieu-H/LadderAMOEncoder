@@ -40,7 +40,7 @@ static const std::map<std::string, std::string> option_list = {
     {"--BDD", "Use BDD encoding for staircase constraints"},
     {"--product", "Use 2-Product encoding for staircase constraints"},
     {"--duplex", "Use duplex encoding for staircase constraints"},
-    {"--duplexNSC", "Use ladder encoding for staircase constraints"},
+    {"--ladder", "Use ladder encoding for staircase constraints"},
     {"--check-solution", "Calculate the antibandwidth of the found SAT solution and compare it to the actual width [default: false]"},
     {"-set-lb <new LB>", "Overwrite predefined LB with <new LB>, has to be at least 2"},
     {"-set-ub <new UB>", "Overwrite predefined UB with <new UB>, has to be positive"},
