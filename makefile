@@ -4,7 +4,19 @@ OBJS = $(patsubst %.o,$(OBJDIR)/%.o,$(OBJECTS))
 
 SRCDIR=src
 
-FLAGS= -Wall -Werror -Wextra -O3 -DNDEBUG
+# FLAGS= -Wall -Werror -Wextra -O3 -DNDEBUG
+# FLAGS= -Wall -Werror -Wextra -g -O0
+
+DEBUG_FLAGS= -Wall -Werror -Wextra -g -O0
+RELEASE_FLAGS= -Wall -Werror -Wextra -O3 -DNDEBUG
+
+# Default mode: release
+FLAGS= $(RELEASE_FLAGS)
+
+# Target build debug
+debug: FLAGS=$(DEBUG_FLAGS)
+debug: clean all
+
 IGNORE_ASSERTVARS= -Wno-unused-but-set-variable
 STANDARD= -std=c++11
 

@@ -5,20 +5,28 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": [],
+      "program": "${workspaceFolder}/build/staircase_enc",
+      "args": [
+        "8",
+        "-set-lb",
+        "4",
+        "-set-ub",
+        "5",
+        "--duplex",
+      ],
       "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
       "externalConsole": false,
-      "cwd": "/home/hieu/work/StaircaseAMO/cpaior20_duplex_encoder/DuplexEncoder",
-      "program": "/home/hieu/work/StaircaseAMO/cpaior20_duplex_encoder/DuplexEncoder/build/Debug/outDebug",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         }
-      ]
+      ],
+      "preLaunchTask": "Build Debug"
     }
   ]
 }
