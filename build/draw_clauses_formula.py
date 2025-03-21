@@ -24,21 +24,21 @@ def reduced(x):
 
 
 def seq(x):
-    return N(x) * (3 * (x - 2) + 1)
+    return N(x) * (4 * x - 7)
 
 # Define the naive expression
 
 
-def naive(x):
-    return (N(x) * (x - 1) * x) / 2
-
-# Define the BDD expression
-
-
 def bdd(x):
-    return N(x) * (3 * (x - 2) + 2 * (x - 1) - 1)
+    return N(x) * 4 * (x - 1)
 
 # Define the product expression
+
+
+def card(x):
+    return N(x) * x
+
+# Define the BDD expression
 
 
 def product(x):
@@ -54,7 +54,7 @@ def duplex(x):
 
 
 def ladder(x):
-    return 8 * np.ceil(n(x) / x) * x - 8 * np.ceil(n(x) / x) - 7 * x + 7
+    return 8 * np.ceil(n(x) / x) * x - 14 * np.ceil(n(x) / x) - 7 * x + 13
 
 
 # Generate x values
@@ -63,8 +63,8 @@ x_values = np.linspace(2, 999, 998)
 # Calculate y values using the expressions
 reduced_values = reduced(x_values)
 seq_values = seq(x_values)
-naive_values = naive(x_values)
 bdd_values = bdd(x_values)
+card_values = card(x_values)
 product_values = product(x_values)
 duplex_values = duplex(x_values)
 ladder_values = ladder(x_values)
@@ -78,17 +78,17 @@ def custom_formatter(y, pos):
 
 # Create the plot
 # plt.figure(figsize=(10, 10))
-plt.plot(x_values, naive_values, linestyle='-',
-         label="Naive", color='green', linewidth=2)
 plt.plot(x_values, reduced_values, linestyle=':',
-         label="Reduced", color='blue', linewidth=2)
+         label="Pairwise", color='blue', linewidth=2)
 plt.plot(x_values, seq_values, linestyle='--',
          label="Seq", color='orange', linewidth=2)
 plt.plot(x_values, bdd_values, linestyle='-.',
          label="BDD", color='purple', linewidth=2)
-plt.plot(x_values, product_values, linestyle=':',
+plt.plot(x_values, card_values, linestyle=':',
+         label="Card", color='green', linewidth=2)
+plt.plot(x_values, product_values, linestyle='--',
          label="Product", color='red', linewidth=2)
-plt.plot(x_values, duplex_values, linestyle='--',
+plt.plot(x_values, duplex_values, linestyle='-.',
          label="Duplex", color='magenta', linewidth=2)
 plt.plot(x_values, ladder_values, linestyle='-',
          label="SCL", color='black', linewidth=2)

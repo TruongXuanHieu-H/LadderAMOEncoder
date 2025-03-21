@@ -24,7 +24,12 @@ def seq(x):
 
 
 def bdd(x):
-    return N(x) * (2 * x - 3)
+    return N(x) * 2 * (x - 1)
+
+# Define the product expression
+
+def card(x):
+    return N(x) * x
 
 # Define the product expression
 
@@ -42,7 +47,7 @@ def duplex(x):
 
 
 def ladder(x):
-    return 2 * np.ceil(n(x) / x) * x - 3 * np.ceil(n(x) / x) - 2 * x + 4
+    return (2 * np.ceil(n(x) / x) - 2) * (x - 2)
 
 
 # Generate x values
@@ -51,6 +56,7 @@ x_values = np.linspace(2, 999, 998)
 # Calculate y values using the expressions
 seq_values = seq(x_values)
 bdd_values = bdd(x_values)
+card_values = card(x_values)
 product_values = product(x_values)
 duplex_values = duplex(x_values)
 ladder_values = ladder(x_values)
@@ -68,9 +74,11 @@ plt.plot(x_values, seq_values, linestyle='--',
          label="Seq", color='orange', linewidth=2)
 plt.plot(x_values, bdd_values, linestyle='-.',
          label="BDD", color='purple', linewidth=2)
-plt.plot(x_values, product_values, linestyle=':',
+plt.plot(x_values, card_values, linestyle=':',
+         label="Card", color='green', linewidth=2)
+plt.plot(x_values, product_values, linestyle='--',
          label="Product", color='red', linewidth=2)
-plt.plot(x_values, duplex_values, linestyle='--',
+plt.plot(x_values, duplex_values, linestyle='-.',
          label="Duplex", color='magenta', linewidth=2)
 plt.plot(x_values, ladder_values, linestyle='-',
          label="SCL", color='black', linewidth=2)
