@@ -61,30 +61,67 @@ namespace SINGLESTAIR
             // Encode the first window, which only have lower part
             int lastVar = window * (int)w + w;
 
-            for (int i = w - 1; i >= 1; i--)
-            {
-                int var = window * (int)w + i;
-                cc->add_clause({-var, get_aux_var(var, lastVar)});
+            { // Formula 7
+                // for (int i = w - 1; i >= 1; i--)
+                // {
+                //     int var = window * (int)w + i;
+                //     cc->add_clause({-var, get_aux_var(var, lastVar)});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= w - 1; i++)
+                {
+                    int var = window * (int)w + w + 1 - i;
+                    cc->add_clause({-var, get_aux_var(var, lastVar)});
+                }
             }
 
-            for (int i = w; i >= 2; i--)
-            {
-                int var = window * (int)w + i;
-                cc->add_clause({-get_aux_var(var, lastVar), get_aux_var(var - 1, lastVar)});
+            { // Formula 8
+                // for (int i = w; i >= 2; i--)
+                // {
+                //     int var = window * (int)w + i;
+                //     cc->add_clause({-get_aux_var(var, lastVar), get_aux_var(var - 1, lastVar)});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= w - 1; i++)
+                {
+                    int var = window * (int)w + w + 1 - i;
+                    cc->add_clause({-get_aux_var(var + 1, lastVar), get_aux_var(var, lastVar)});
+                }
             }
 
-            for (int i = 1; i < (int)w; i++)
-            {
-                int var = window * (int)w + i;
-                int main = get_aux_var(var, lastVar);
-                int sub = get_aux_var(var + 1, lastVar);
-                cc->add_clause({var, sub, -main});
+            { // Formula 9
+                // for (int i = 1; i < (int)w; i++)
+                // {
+                //     int var = window * (int)w + i;
+                //     int main = get_aux_var(var, lastVar);
+                //     int sub = get_aux_var(var + 1, lastVar);
+                //     cc->add_clause({var, sub, -main});
+                // }
+
+                for (int i = 2; i <= (int)w - 1; i++)
+                {
+                    int var = window * (int)w + w + 1 - i;
+                    int sub = get_aux_var(var + 1, lastVar);
+                    int main = get_aux_var(var, lastVar);
+                    cc->add_clause({var, sub, -main});
+                }
             }
 
-            for (int i = 1; i < (int)w; i++)
-            {
-                int var = window * (int)w + i;
-                cc->add_clause({-var, -get_aux_var(var + 1, lastVar)});
+            { // Formula 10
+                // for (int i = 1; i < (int)w; i++)
+                // {
+                //     int var = window * (int)w + i;
+                //     cc->add_clause({-var, -get_aux_var(var + 1, lastVar)});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= (int)w; i++)
+                {
+                    int var = window * (int)w + w + 1 - i;
+                    cc->add_clause({-var, -get_aux_var(var + 1, lastVar)});
+                }
             }
         }
         else if (window == ceil((float)n / w) - 1)
@@ -96,59 +133,128 @@ namespace SINGLESTAIR
             {
                 int real_w = n % w; // width < w
                 // Upper part
-                for (int i = 2; i <= real_w; i++)
-                {
-                    int reverse_var = window * (int)w + i;
-                    cc->add_clause({-reverse_var, get_aux_var(firstVar, reverse_var)});
+                { // Formula 7
+                    for (int i = 2; i <= real_w; i++)
+                    {
+                        int reverse_var = window * (int)w + i;
+                        cc->add_clause({-reverse_var, get_aux_var(firstVar, reverse_var)});
+                    }
                 }
 
-                for (int i = real_w - 1; i > 0; i--)
-                {
-                    int reverse_var = window * (int)w + real_w - i;
-                    cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+                { // Formula 8
+                    // for (int i = real_w - 1; i > 0; i--)
+                    // {
+                    //     int reverse_var = window * (int)w + real_w - i;
+                    //     cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+                    // }
+
+                    // Rewrite
+                    for (int i = 2; i <= real_w; i++)
+                    {
+                        int reverse_var = window * (int)w + i - 1;
+                        cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+                    }
                 }
 
-                for (int i = 0; i < (int)real_w - 1; i++)
-                {
-                    int var = window * (int)w + real_w - i;
-                    int main = get_aux_var(firstVar, var);
-                    int sub = get_aux_var(firstVar, var - 1);
-                    cc->add_clause({sub, var, -main});
+                { // Formula 9
+                    // for (int i = 0; i < (int)real_w - 1; i++)
+                    // {
+                    //     int var = window * (int)w + real_w - i;
+                    //     int main = get_aux_var(firstVar, var);
+                    //     int sub = get_aux_var(firstVar, var - 1);
+                    //     cc->add_clause({sub, var, -main});
+                    // }
+
+                    // Rewrite
+                    for (int i = 2; i <= real_w; i++)
+                    {
+                        int var = window * (int)w + i;
+                        int sub = get_aux_var(firstVar, var - 1);
+                        int main = get_aux_var(firstVar, var);
+                        cc->add_clause({var, sub, -main});
+                    }
                 }
 
-                for (int i = real_w; i > 1; i--)
-                {
-                    int reverse_var = window * (int)w + i;
-                    cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+                { // Formula 10
+                    // for (int i = real_w; i > 1; i--)
+                    // {
+                    //     int reverse_var = window * (int)w + i;
+                    //     cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+                    // }
+
+                    // Rewrite
+                    for (int i = 2; i <= real_w; i++)
+                    {
+                        int reverse_var = window * (int)w + i;
+                        cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+                    }
                 }
             }
             else
             {
                 // Upper part
-                for (int i = 2; i <= (int)w; i++)
-                {
-                    int reverse_var = window * (int)w + i;
-                    cc->add_clause({-reverse_var, get_aux_var(firstVar, reverse_var)});
+                { // Formula 7
+                    // for (int i = 2; i <= (int)w; i++)
+                    // {
+                    //     int reverse_var = window * (int)w + i;
+                    //     cc->add_clause({-reverse_var, get_aux_var(firstVar, reverse_var)});
+                    // }
+
+                    // Rewrite
+                    for (int i = 2; i <= (int)w - 1; i++)
+                    {
+                        int reverse_var = window * (int)w + i;
+                        cc->add_clause({-reverse_var, get_aux_var(firstVar, reverse_var)});
+                    }
                 }
 
-                for (int i = w - 1; i >= 1; i--)
-                {
-                    int reverse_var = window * (int)w + w - i;
-                    cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+                { // Formula 8
+                    // for (int i = w - 1; i >= 1; i--)
+                    // {
+                    //     int reverse_var = window * (int)w + w - i;
+                    //     cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+                    // }
+
+                    // Rewrite
+                    for (int i = 2; i <= w - 1; i++)
+                    {
+                        int reverse_var = window * (int)w + i - 1;
+                        cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+                    }
                 }
 
-                for (int i = 0; i < (int)w - 1; i++)
-                {
-                    int var = window * (int)w + w - i;
-                    int main = get_aux_var(firstVar, var);
-                    int sub = get_aux_var(firstVar, var - 1);
-                    cc->add_clause({sub, var, -main});
+                { // Formula 9
+                    // for (int i = 0; i < (int)w - 1; i++)
+                    // {
+                    //     int var = window * (int)w + w - i;
+                    //     int main = get_aux_var(firstVar, var);
+                    //     int sub = get_aux_var(firstVar, var - 1);
+                    //     cc->add_clause({sub, var, -main});
+                    // }
+
+                    // Rewrite
+                    for (int i = 2; i <= (int)w - 1; i++)
+                    {
+                        int var = window * (int)w + i;
+                        int sub = get_aux_var(firstVar, var - 1);
+                        int main = get_aux_var(firstVar, var);
+                        cc->add_clause({var, sub, -main});
+                    }
                 }
 
-                for (int i = (int)w; i > 1; i--)
-                {
-                    int reverse_var = window * (int)w + i;
-                    cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+                { // Formula 10
+                    // for (int i = (int)w; i > 1; i--)
+                    // {
+                    //     int reverse_var = window * (int)w + i;
+                    //     cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+                    // }
+
+                    // Rewrite
+                    for (int i = 2; i <= (int)w; i++)
+                    {
+                        int reverse_var = window * (int)w + i;
+                        cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+                    }
                 }
             }
         }
@@ -158,59 +264,134 @@ namespace SINGLESTAIR
 
             // Upper part
             int firstVar = window * (int)w + 1;
-            for (int i = 2; i <= (int)w; i++)
-            {
-                int reverse_var = window * (int)w + i;
-                cc->add_clause({-reverse_var, get_aux_var(firstVar, reverse_var)});
+            { // Formula 7
+                // for (int i = 2; i <= (int)w; i++)
+                // {
+                //     int reverse_var = window * (int)w + i;
+                //     cc->add_clause({-reverse_var, get_aux_var(firstVar, reverse_var)});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= (int)w - 1; i++)
+                {
+                    int reverse_var = window * (int)w + i;
+                    cc->add_clause({-reverse_var, get_aux_var(firstVar, reverse_var)});
+                }
             }
 
-            for (int i = w - 1; i >= 1; i--)
-            {
-                int reverse_var = window * (int)w + w - i;
-                cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+            { // Formula 8
+                // for (int i = w - 1; i >= 1; i--)
+                // {
+                //     int reverse_var = window * (int)w + w - i;
+                //     cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= w - 1; i++)
+                {
+                    int reverse_var = window * (int)w + i - 1;
+                    cc->add_clause({-get_aux_var(firstVar, reverse_var), get_aux_var(firstVar, reverse_var + 1)});
+                }
             }
 
-            for (int i = 0; i < (int)w - 1; i++)
-            {
-                int var = window * (int)w + w - i;
-                int main = get_aux_var(firstVar, var);
-                int sub = get_aux_var(firstVar, var - 1);
-                cc->add_clause({sub, var, -main});
+            { // Formula 9
+                // for (int i = 0; i < (int)w - 1; i++)
+                // {
+                //     int var = window * (int)w + w - i;
+                //     int main = get_aux_var(firstVar, var);
+                //     int sub = get_aux_var(firstVar, var - 1);
+                //     cc->add_clause({sub, var, -main});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= (int)w - 1; i++)
+                {
+                    int var = window * (int)w + i;
+                    int sub = get_aux_var(firstVar, var - 1);
+                    int main = get_aux_var(firstVar, var);
+                    cc->add_clause({var, sub, -main});
+                }
             }
 
-            for (int i = (int)w; i > 1; i--)
-            {
-                int reverse_var = window * (int)w + i;
-                cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+            { // Formula 10
+                // for (int i = (int)w; i > 1; i--)
+                // {
+                //     int reverse_var = window * (int)w + i;
+                //     cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= (int)w; i++)
+                {
+                    int reverse_var = window * (int)w + i;
+                    cc->add_clause({-reverse_var, -get_aux_var(firstVar, reverse_var - 1)});
+                }
             }
 
             // Lower part
             int lastVar = window * (int)w + w;
-            for (int i = w - 1; i >= 1; i--)
-            {
-                int var = window * (int)w + i;
-                cc->add_clause({-var, get_aux_var(var, lastVar)});
+            { // Formula 7
+                // for (int i = w - 1; i >= 1; i--)
+                // {
+                //     int var = window * (int)w + i;
+                //     cc->add_clause({-var, get_aux_var(var, lastVar)});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= w - 1; i++)
+                {
+                    int var = window * (int)w + w + 1 - i;
+                    cc->add_clause({-var, get_aux_var(var, lastVar)});
+                }
             }
 
-            for (int i = w; i >= 2; i--)
-            {
-                int var = window * (int)w + i;
-                cc->add_clause({-get_aux_var(var, lastVar), get_aux_var(var - 1, lastVar)});
+            { // Formula 8
+                // for (int i = w; i >= 2; i--)
+                // {
+                //     int var = window * (int)w + i;
+                //     cc->add_clause({-get_aux_var(var, lastVar), get_aux_var(var - 1, lastVar)});
+                // }
+
+                // Rewrite
+                for (int i = 2; i <= w - 1; i++)
+                {
+                    int var = window * (int)w + w + 1 - i;
+                    cc->add_clause({-get_aux_var(var + 1, lastVar), get_aux_var(var, lastVar)});
+                }
             }
 
-            for (int i = 1; i < (int)w; i++)
-            {
-                int var = window * (int)w + i;
-                int main = get_aux_var(var, lastVar);
-                int sub = get_aux_var(var + 1, lastVar);
-                cc->add_clause({var, sub, -main});
+            { // Formula 9
+                // for (int i = 1; i < (int)w; i++)
+                // {
+                //     int var = window * (int)w + i;
+                //     int main = get_aux_var(var, lastVar);
+                //     int sub = get_aux_var(var + 1, lastVar);
+                //     cc->add_clause({var, sub, -main});
+                // }
+
+                for (int i = 2; i <= (int)w - 1; i++)
+                {
+                    int var = window * (int)w + w + 1 - i;
+                    int sub = get_aux_var(var + 1, lastVar);
+                    int main = get_aux_var(var, lastVar);
+                    cc->add_clause({var, sub, -main});
+                }
             }
 
-            // Can be disable
-            // for (int i = 1; i < (int)w; i++)
-            // {
-            //     int var = window * (int)w + i;
-            //     cc->add_clause({-var, -GetEncodedAuxVar(auxStartVarLP + var + 1)});
+            // Can be disabled
+            // { // Formula 10
+            //     // for (int i = 1; i < (int)w; i++)
+            //     // {
+            //     //     int var = window * (int)w + i;
+            //     //     cc->add_clause({-var, -get_aux_var(var + 1, lastVar)});
+            //     // }
+
+            //     // Rewrite
+            //     for (int i = 2; i <= (int)w; i++)
+            //     {
+            //         int var = window * (int)w + w + 1 - i;
+            //         cc->add_clause({-var, -get_aux_var(var + 1, lastVar)});
+            //     }
             // }
         }
     }
