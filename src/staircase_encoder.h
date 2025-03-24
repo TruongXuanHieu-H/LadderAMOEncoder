@@ -11,6 +11,8 @@
 #include "reduced_encoder.h"
 #include "naive_encoder.h"
 #include "seq_encoder.h"
+#include "card_encoder.h"
+#include "bdd_encoder.h"
 
 namespace SINGLESTAIR
 {
@@ -23,6 +25,7 @@ namespace SINGLESTAIR
         product,
         duplex,
         ladder,
+        card,
     };
 
     const std::unordered_map<EncodeType, std::string> encode_type_map = {
@@ -32,7 +35,9 @@ namespace SINGLESTAIR
         {BDD, "BDD"},
         {product, "product"},
         {duplex, "duplex"},
-        {ladder, "ladder"}};
+        {ladder, "ladder"},
+        {card, "card"},
+    };
 
     class StaircaseEncoder
     {

@@ -39,6 +39,7 @@ static const std::map<std::string, std::string> option_list = {
     {"--seq", "Use sequential encoding for staircase constraints"},
     {"--BDD", "Use BDD encoding for staircase constraints"},
     {"--product", "Use 2-Product encoding for staircase constraints"},
+    {"--card", "Use cardinality network encoding for staircase constraints (use pblib)"},
     {"--duplex", "Use duplex encoding for staircase constraints"},
     {"--ladder", "Use ladder encoding for staircase constraints"},
     {"--check-solution", "Calculate the antibandwidth of the found SAT solution and compare it to the actual width [default: false]"},
@@ -145,6 +146,10 @@ int main(int argc, char **argv)
         else if (argv[i] == std::string("--ladder"))
         {
             stair_enc->enc_choice = EncodeType::ladder;
+        }
+        else if (argv[i] == std::string("--card"))
+        {
+            stair_enc->enc_choice = EncodeType::card;
         }
         else if (argv[i] == std::string("--check-solution"))
         {

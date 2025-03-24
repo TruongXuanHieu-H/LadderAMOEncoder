@@ -116,6 +116,7 @@ namespace SINGLESTAIR
             break;
         case BDD:
             std::cout << "c Initializing a BDD encoder with n = " << n << "." << std::endl;
+            enc = new BDDEncoder(cc, vh);
             break;
         case product:
             std::cout << "c Initializing a Product encoder with n = " << n << "." << std::endl;
@@ -128,6 +129,10 @@ namespace SINGLESTAIR
         case ladder:
             std::cout << "c Initializing a Ladder encoder with n = " << n << "." << std::endl;
             enc = new LadderEncoder(cc, vh);
+            break;
+        case card:
+            std::cout << "c Initializing a Cardinality network encoder with n = " << n << "." << std::endl;
+            enc = new CardinalityEncoder(cc, vh);
             break;
         default:
             std::cout << "c Initializing a null encoder with n = " << n << "." << std::endl;
