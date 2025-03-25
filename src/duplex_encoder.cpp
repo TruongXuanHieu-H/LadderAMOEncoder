@@ -7,7 +7,7 @@
 #include <cmath>
 #include <unordered_map>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
     DuplexEncoder::DuplexEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : Encoder(clause_container, var_handler)
     {
@@ -26,7 +26,7 @@ namespace SINGLESTAIR
         node_amz_literals = std::unordered_map<int, std::vector<std::vector<int>>>();
     }
 
-    void DuplexEncoder::encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[])
+    void DuplexEncoder::encode_and_solve_ladder_amo(int n, int w, int initCondLength, int initCond[])
     {
         (void)initCondLength;
         (void)initCond;

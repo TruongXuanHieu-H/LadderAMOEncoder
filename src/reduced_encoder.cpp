@@ -8,7 +8,7 @@
 #include <iostream>
 #include <iterator>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
     ReducedEncoder::ReducedEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : Encoder(clause_container, var_handler)
@@ -17,7 +17,7 @@ namespace SINGLESTAIR
 
     ReducedEncoder::~ReducedEncoder() {};
 
-    void ReducedEncoder::encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[])
+    void ReducedEncoder::encode_and_solve_ladder_amo(int n, int w, int initCondLength, int initCond[])
     {
         std::cout << "start reduced" << std::endl;
 

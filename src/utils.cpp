@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <stdlib.h> //abs
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
     /*
      * input_size: number of nodes -> number of variables will be input_size

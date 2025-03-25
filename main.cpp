@@ -2,9 +2,9 @@
 #include <signal.h>
 #include <iomanip>
 
-#include "src/staircase_encoder.h"
+#include "src/ladder_amo_encoder.h"
 
-using namespace SINGLESTAIR;
+using namespace SINGLELADDERAMO;
 
 const int ver{1};
 
@@ -34,14 +34,14 @@ static void SIGINT_exit(int signum)
 
 static const std::map<std::string, std::string> option_list = {
     {"--help", "Print usage message with all possible options"},
-    {"--naive", "Use naive encoding for staircase constraints"},
-    {"--reduced", "Use reduced naive encoding for staircase constraints"},
-    {"--seq", "Use sequential encoding for staircase constraints"},
-    {"--BDD", "Use BDD encoding for staircase constraints"},
-    {"--product", "Use 2-Product encoding for staircase constraints"},
-    {"--card", "Use cardinality network encoding for staircase constraints (use pblib)"},
-    {"--duplex", "Use duplex encoding for staircase constraints"},
-    {"--ladder", "Use ladder encoding for staircase constraints"},
+    {"--naive", "Use naive encoding for ladder AMO constraints"},
+    {"--reduced", "Use reduced naive encoding for ladder AMO constraints"},
+    {"--seq", "Use sequential encoding for ladder AMO constraints"},
+    {"--BDD", "Use BDD encoding for ladder AMO constraints (use pblib)"},
+    {"--product", "Use 2-Product encoding for ladder AMO constraints"},
+    {"--card", "Use cardinality network encoding for ladder AMO constraints (use pblib)"},
+    {"--duplex", "Use duplex encoding for ladder AMO constraints"},
+    {"--ladder", "Use ladder encoding for ladder AMO constraints"},
     {"--check-solution", "Calculate the antibandwidth of the found SAT solution and compare it to the actual width [default: false]"},
     {"-set-lb <new LB>", "Overwrite predefined LB with <new LB>, has to be at least 2"},
     {"-set-ub <new UB>", "Overwrite predefined UB with <new UB>, has to be positive"},
@@ -49,7 +49,7 @@ static const std::map<std::string, std::string> option_list = {
 
 void print_usage()
 {
-    std::cout << "usage: staircase_enc number_of_elements [ <option> ... ] " << std::endl;
+    std::cout << "usage: ladder_amo_enc number_of_elements [ <option> ... ] " << std::endl;
     std::cout << "where '<option>' is one of the following options:" << std::endl;
     std::cout << std::endl;
     for (auto option : option_list)
@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     signal_SIGTERM = signal(SIGTERM, SIGINT_exit);
     signal_SIGABRT = signal(SIGABRT, SIGINT_exit);
 
-    StaircaseEncoder *stair_enc;
+    LadderAMOEncoder *ladder_amo_enc;
 
     if (argc < 2)
     {
@@ -105,90 +105,90 @@ int main(int argc, char **argv)
 
     std::cout << "c Ladder Encoder 0." << ver << "." << std::endl;
 
-    stair_enc = new StaircaseEncoder();
+    ladder_amo_enc = new LadderAMOEncoder();
 
     for (int i = 1; i < argc; i++)
     {
         if (argv[i][0] != '-')
         {
-            stair_enc->set_n(atoi(argv[i]));
+            ladder_amo_enc->set_n(atoi(argv[i]));
         }
         else if (argv[i] == std::string("--help"))
         {
             print_usage();
-            delete stair_enc;
+            delete ladder_amo_enc;
             return 1;
         }
         else if (argv[i] == std::string("--naive"))
         {
-            stair_enc->enc_choice = EncodeType::naive;
+            ladder_amo_enc->enc_choice = EncodeType::naive;
         }
         else if (argv[i] == std::string("--reduced"))
         {
-            stair_enc->enc_choice = EncodeType::reduced;
+            ladder_amo_enc->enc_choice = EncodeType::reduced;
         }
         else if (argv[i] == std::string("--seq"))
         {
-            stair_enc->enc_choice = EncodeType::seq;
+            ladder_amo_enc->enc_choice = EncodeType::seq;
         }
         else if (argv[i] == std::string("--BDD"))
         {
-            stair_enc->enc_choice = EncodeType::BDD;
+            ladder_amo_enc->enc_choice = EncodeType::BDD;
         }
         else if (argv[i] == std::string("--product"))
         {
-            stair_enc->enc_choice = EncodeType::product;
+            ladder_amo_enc->enc_choice = EncodeType::product;
         }
         else if (argv[i] == std::string("--duplex"))
         {
-            stair_enc->enc_choice = EncodeType::duplex;
+            ladder_amo_enc->enc_choice = EncodeType::duplex;
         }
         else if (argv[i] == std::string("--ladder"))
         {
-            stair_enc->enc_choice = EncodeType::ladder;
+            ladder_amo_enc->enc_choice = EncodeType::ladder;
         }
         else if (argv[i] == std::string("--card"))
         {
-            stair_enc->enc_choice = EncodeType::card;
+            ladder_amo_enc->enc_choice = EncodeType::card;
         }
         else if (argv[i] == std::string("--check-solution"))
         {
-            stair_enc->check_solution = true;
+            ladder_amo_enc->check_solution = true;
         }
         else if (argv[i] == std::string("-set-lb"))
         {
-            stair_enc->forced_lb = get_number_arg(argv[++i]);
-            if (stair_enc->forced_lb < 2)
+            ladder_amo_enc->forced_lb = get_number_arg(argv[++i]);
+            if (ladder_amo_enc->forced_lb < 2)
             {
                 std::cout << "Error, width has to be at least 2." << std::endl;
-                delete stair_enc;
+                delete ladder_amo_enc;
                 return 1;
             }
-            stair_enc->overwrite_lb = true;
-            std::cout << "c LB is predefined as " << stair_enc->forced_lb << "." << std::endl;
+            ladder_amo_enc->overwrite_lb = true;
+            std::cout << "c LB is predefined as " << ladder_amo_enc->forced_lb << "." << std::endl;
         }
         else if (argv[i] == std::string("-set-ub"))
         {
-            stair_enc->forced_ub = get_number_arg(argv[++i]);
-            if (stair_enc->forced_ub < 0)
+            ladder_amo_enc->forced_ub = get_number_arg(argv[++i]);
+            if (ladder_amo_enc->forced_ub < 0)
             {
                 std::cout << "Error, width has to be positive." << std::endl;
-                delete stair_enc;
+                delete ladder_amo_enc;
                 return 1;
             }
-            stair_enc->overwrite_ub = true;
-            std::cout << "c UB is predefined as " << stair_enc->forced_ub << "." << std::endl;
+            ladder_amo_enc->overwrite_ub = true;
+            std::cout << "c UB is predefined as " << ladder_amo_enc->forced_ub << "." << std::endl;
         }
         else
         {
             std::cerr << "Unrecognized option: " << argv[i] << std::endl;
 
-            delete stair_enc;
+            delete ladder_amo_enc;
             return 1;
         }
     }
 
-    stair_enc->encode_and_solve_stair();
+    ladder_amo_enc->encode_and_solve_ladder_amo();
 
-    delete stair_enc;
+    delete ladder_amo_enc;
 }

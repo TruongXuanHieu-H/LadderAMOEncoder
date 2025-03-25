@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <cstddef>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
   typedef int BDD_id;

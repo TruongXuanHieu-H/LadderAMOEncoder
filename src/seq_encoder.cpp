@@ -8,7 +8,7 @@
 #include <iostream>
 #include <iterator>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
     SeqEncoder::SeqEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : Encoder(clause_container, var_handler)
@@ -17,7 +17,7 @@ namespace SINGLESTAIR
 
     SeqEncoder::~SeqEncoder() {};
 
-    void SeqEncoder::encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[])
+    void SeqEncoder::encode_and_solve_ladder_amo(int n, int w, int initCondLength, int initCond[])
     {
         std::cout << "start product" << std::endl;
         for (int i = 1; i <= n - w + 1; i++)

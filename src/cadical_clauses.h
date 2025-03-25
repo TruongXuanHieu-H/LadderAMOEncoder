@@ -4,7 +4,7 @@
 #include "clause_cont.h"
 #include "cadical.hpp"
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
   class CadicalClauseContainer : public ClauseContainer

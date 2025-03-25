@@ -3,7 +3,7 @@
 #include <iostream>
 #include <assert.h>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
     CadicalClauseContainer::CadicalClauseContainer(VarHandler *v, int split_size, CaDiCaL::Solver *solver)

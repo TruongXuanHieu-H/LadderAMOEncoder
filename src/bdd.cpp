@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <iostream>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
     BDD::BDD(int from, int to, bool ub) : bound(ub), i_from(from), i_to(to) {};

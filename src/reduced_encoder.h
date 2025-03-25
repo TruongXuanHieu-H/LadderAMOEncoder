@@ -4,7 +4,7 @@
 #include "encoder.h"
 #include <deque>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
     typedef std::deque<int>::iterator deq_int_it;
 
@@ -14,7 +14,7 @@ namespace SINGLESTAIR
         ReducedEncoder(ClauseContainer *cc, VarHandler *vh);
         virtual ~ReducedEncoder();
 
-        virtual void encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[]) override;
+        virtual void encode_and_solve_ladder_amo(int n, int w, int initCondLength, int initCond[]) override;
 
     private:
         void encode_first_amo(deq_int_it it_begin, deq_int_it it_end);

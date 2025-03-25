@@ -5,7 +5,7 @@
 #include <utility>
 #include <string>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
   class VarHandler
   {

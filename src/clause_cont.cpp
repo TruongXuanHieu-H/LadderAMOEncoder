@@ -2,7 +2,7 @@
 #include <iostream>
 #include <assert.h>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
     ClauseContainer::ClauseContainer(VarHandler *v, unsigned split_limit) : vh(v), split_size(split_limit)

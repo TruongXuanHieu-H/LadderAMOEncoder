@@ -5,7 +5,7 @@
 #include "bdd.h"
 #include <deque>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
     class DuplexEncoder : public Encoder
     {
@@ -13,7 +13,7 @@ namespace SINGLESTAIR
         DuplexEncoder(ClauseContainer *clause_container, VarHandler *var_handler);
         virtual ~DuplexEncoder();
 
-        virtual void encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[]) override;
+        virtual void encode_and_solve_ladder_amo(int n, int w, int initCondLength, int initCond[]) override;
 
     private:
         BDDHandler bh;

@@ -11,7 +11,7 @@
 #include <vector>
 #include <regex>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
     CardinalityEncoder::CardinalityEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : Encoder(clause_container, var_handler)
@@ -20,7 +20,7 @@ namespace SINGLESTAIR
 
     CardinalityEncoder::~CardinalityEncoder() {};
 
-    void CardinalityEncoder::encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[])
+    void CardinalityEncoder::encode_and_solve_ladder_amo(int n, int w, int initCondLength, int initCond[])
     {
         for (int i = 1; i <= n - w + 1; i++)
         {

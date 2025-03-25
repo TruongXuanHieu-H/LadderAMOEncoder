@@ -4,7 +4,7 @@
 #include "utils.h"
 #include <vector>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
   typedef std::vector<int> Clause;

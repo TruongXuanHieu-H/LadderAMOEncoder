@@ -3,7 +3,7 @@
 #include <math.h>
 #include "utils.h"
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
 
     LadderEncoder::LadderEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : Encoder(clause_container, var_handler)
@@ -28,7 +28,7 @@ namespace SINGLESTAIR
         return new_aux_var;
     }
 
-    void LadderEncoder::encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[])
+    void LadderEncoder::encode_and_solve_ladder_amo(int n, int w, int initCondLength, int initCond[])
     {
         (void)initCondLength;
         (void)initCond;
@@ -408,7 +408,7 @@ namespace SINGLESTAIR
      */
     void LadderEncoder::glue_window(int window, int n, int w)
     {
-        /*  The stair look like this:
+        /*  The ladder AMO look like this:
          *      Window 1        Window 2        Window 3        Window 4
          *      1   2   3   |               |               |
          *          2   3   |   4           |               |

@@ -4,7 +4,7 @@
 #include "encoder.h"
 #include <map>
 
-namespace SINGLESTAIR
+namespace SINGLELADDERAMO
 {
   class LadderEncoder : public Encoder
   {
@@ -12,7 +12,7 @@ namespace SINGLESTAIR
     LadderEncoder(ClauseContainer *clause_container, VarHandler *var_handler);
     virtual ~LadderEncoder();
 
-    virtual void encode_and_solve_staircase(int n, int w, int initCondLength, int initCond[]) override;
+    virtual void encode_and_solve_ladder_amo(int n, int w, int initCondLength, int initCond[]) override;
 
   private:
     void encode_window(int window, int n, int w);

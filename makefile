@@ -1,5 +1,5 @@
 OBJDIR=build
-OBJECTS= utils.o ladder_encoder.o bdd.o duplex_encoder.o product_encoder.o card_encoder.o bdd_encoder.o naive_encoder.o seq_encoder.o reduced_encoder.o encoder.o clause_cont.o cadical_clauses.o staircase_encoder.o
+OBJECTS= utils.o ladder_encoder.o bdd.o duplex_encoder.o product_encoder.o card_encoder.o bdd_encoder.o naive_encoder.o seq_encoder.o reduced_encoder.o encoder.o clause_cont.o cadical_clauses.o ladder_amo_encoder.o
 OBJS = $(patsubst %.o,$(OBJDIR)/%.o,$(OBJECTS))
 
 SRCDIR=src
@@ -27,12 +27,12 @@ CADICAL_LIB=-lcadical
 all : $(OBJDIR)/main.o
 	cp src/card_amo.py $(OBJDIR)
 	cp src/bdd_amo.py $(OBJDIR)
-	g++ $(FLAGS) $(OBJDIR)/main.o $(OBJS) -L$(CADICAL_LIB_DIR) $(CADICAL_LIB) -o build/staircase_enc
+	g++ $(FLAGS) $(OBJDIR)/main.o $(OBJS) -L$(CADICAL_LIB_DIR) $(CADICAL_LIB) -o build/ladder_amo_enc
 
-$(OBJDIR)/main.o : main.cpp $(OBJS) $(SRCDIR)/staircase_encoder.h
+$(OBJDIR)/main.o : main.cpp $(OBJS) $(SRCDIR)/ladder_amo_encoder.h
 	g++ $(FLAGS) $(STANDARD) -I$(CADICAL_INC) -c $< -o $@
 
-$(OBJDIR)/staircase_encoder.o : $(SRCDIR)/staircase_encoder.cpp $(SRCDIR)/staircase_encoder.h $(SRCDIR)/ladder_encoder.h $(SRCDIR)/duplex_encoder.h $(SRCDIR)/product_encoder.h $(SRCDIR)/card_encoder.h $(SRCDIR)/bdd_encoder.h $(SRCDIR)/reduced_encoder.h $(SRCDIR)/naive_encoder.h $(SRCDIR)/seq_encoder.h $(SRCDIR)/utils.h $(SRCDIR)/clause_cont.h $(SRCDIR)/cadical_clauses.h
+$(OBJDIR)/ladder_amo_encoder.o : $(SRCDIR)/ladder_amo_encoder.cpp $(SRCDIR)/ladder_amo_encoder.h $(SRCDIR)/ladder_encoder.h $(SRCDIR)/duplex_encoder.h $(SRCDIR)/product_encoder.h $(SRCDIR)/card_encoder.h $(SRCDIR)/bdd_encoder.h $(SRCDIR)/reduced_encoder.h $(SRCDIR)/naive_encoder.h $(SRCDIR)/seq_encoder.h $(SRCDIR)/utils.h $(SRCDIR)/clause_cont.h $(SRCDIR)/cadical_clauses.h
 	g++ $(FLAGS) $(STANDARD) -I$(CADICAL_INC) -c $< -o $@
 
 $(OBJDIR)/ladder_encoder.o : $(SRCDIR)/ladder_encoder.cpp $(SRCDIR)/ladder_encoder.h $(SRCDIR)/encoder.h
@@ -76,7 +76,7 @@ $(OBJDIR)/bdd.o : $(SRCDIR)/bdd.cpp $(SRCDIR)/bdd.h
 
 #.PHONY : clean
 clean:
-	rm -f *.a $(OBJDIR)/*.o *~ *.out  $(OBJDIR)/staircase_enc
+	rm -f *.a $(OBJDIR)/*.o *~ *.out  $(OBJDIR)/ladder_amo_enc
 
 tar:
-	tar cfv staircase_enc.tar main.cpp makefile $(SRCDIR)/*.cpp $(SRCDIR)/*.h cadical/*.a cadical/*.hpp
+	tar cfv ladder_amo_enc.tar main.cpp makefile $(SRCDIR)/*.cpp $(SRCDIR)/*.h cadical/*.a cadical/*.hpp
