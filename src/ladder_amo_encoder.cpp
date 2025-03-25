@@ -189,6 +189,18 @@ namespace SINGLELADDERAMO
             return 1;
         }
 
+        if (check_solution && SAT_res == 10)
+        {
+            bool verify_value = calculate_sat_solution(w);
+            if (!verify_value)
+            {
+                std::cerr << "c Error, the solution is not correct." << std::endl;
+
+                cleanup_solving();
+                return 1;
+            }
+        }
+
         std::ofstream outFile;
         outFile.open("./report/" + encode_type_map.find(enc_choice)->second + "_report.txt", std::ios::app);
         if (!outFile)
@@ -201,5 +213,39 @@ namespace SINGLELADDERAMO
         std::cout << "c" << std::endl
                   << "c" << std::endl;
         return 0;
+    }
+
+    bool LadderAMOEncoder::calculate_sat_solution(int w)
+    {
+        bool *solution = new bool[n];
+        for (int i = 0; i < n; i++)
+        {
+            solution[i] = solver->val(i + 1) > 0;
+            std::cout << solution[i] << " ";
+        }
+        std::cout << "\n";
+
+        int max_count_true = 1;
+        for (int i = 0; i < n - w + 1; i++)
+        {
+            int count_true = 0;
+            for (int j = i; j < i + w; j++)
+            {
+                if (solution[j])
+                {
+                    if (count_true < max_count_true)
+                    {
+                        count_true++;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        delete[] solution;
+        return true;
     }
 }

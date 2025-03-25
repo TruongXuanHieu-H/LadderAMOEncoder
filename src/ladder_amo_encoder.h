@@ -83,6 +83,8 @@ namespace SINGLELADDERAMO
 
         void setup_bounds(int &w_from, int &w_to);
         void lookup_bounds(int &lb, int &ub);
+
+        bool calculate_sat_solution(int w);
     };
 }
 
