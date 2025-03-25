@@ -30,7 +30,7 @@ filename3 = os.path.join(parent_dir, "report/BDD_report.txt")
 filename4 = os.path.join(parent_dir, "report/card_report.txt")
 filename5 = os.path.join(parent_dir, "report/product_report.txt")
 filename6 = os.path.join(parent_dir, "report/duplex_report.txt")
-filename7 = os.path.join(parent_dir, "report/ladder_report.txt")
+filename7 = os.path.join(parent_dir, "report/scl_report.txt")
 
 # Read data
 x1, y1 = read_data(filename1, 5)

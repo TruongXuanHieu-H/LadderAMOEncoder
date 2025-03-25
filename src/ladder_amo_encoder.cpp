@@ -126,7 +126,7 @@ namespace SINGLELADDERAMO
             std::cout << "c Initializing a Duplex encoder with n = " << n << "." << std::endl;
             enc = new DuplexEncoder(cc, vh);
             break;
-        case ladder:
+        case scl:
             std::cout << "c Initializing a Ladder encoder with n = " << n << "." << std::endl;
             enc = new LadderEncoder(cc, vh);
             break;

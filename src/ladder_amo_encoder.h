@@ -24,7 +24,7 @@ namespace SINGLELADDERAMO
         BDD,
         product,
         duplex,
-        ladder,
+        scl,
         card,
     };
 
@@ -35,7 +35,7 @@ namespace SINGLELADDERAMO
         {BDD, "BDD"},
         {product, "product"},
         {duplex, "duplex"},
-        {ladder, "ladder"},
+        {scl, "scl"},
         {card, "card"},
     };
 
@@ -45,7 +45,7 @@ namespace SINGLELADDERAMO
         LadderAMOEncoder();
         virtual ~LadderAMOEncoder();
 
-        EncodeType enc_choice = ladder;
+        EncodeType enc_choice = scl;
 
         bool verbose = true;
         bool check_solution = true;

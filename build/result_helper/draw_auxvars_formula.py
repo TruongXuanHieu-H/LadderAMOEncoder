@@ -46,7 +46,7 @@ def duplex(x):
 # Define the SCL expression
 
 
-def ladder(x):
+def scl(x):
     return (2 * np.ceil(n(x) / x) - 2) * (x - 2)
 
 
@@ -59,7 +59,7 @@ bdd_values = bdd(x_values)
 card_values = card(x_values)
 product_values = product(x_values)
 duplex_values = duplex(x_values)
-ladder_values = ladder(x_values)
+scl_values = scl(x_values)
 
 # Custom formatter for y-axis
 
@@ -80,7 +80,7 @@ plt.plot(x_values, product_values, linestyle='--',
          label="Product", color='red', linewidth=2)
 plt.plot(x_values, duplex_values, linestyle='-.',
          label="Duplex", color='magenta', linewidth=2)
-plt.plot(x_values, ladder_values, linestyle='-',
+plt.plot(x_values, scl_values, linestyle='-',
          label="SCL", color='black', linewidth=2)
 
 # Setting labels and grid

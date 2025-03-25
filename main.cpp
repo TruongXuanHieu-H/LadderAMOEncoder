@@ -41,7 +41,7 @@ static const std::map<std::string, std::string> option_list = {
     {"--product", "Use 2-Product encoding for ladder AMO constraints"},
     {"--card", "Use cardinality network encoding for ladder AMO constraints (use pblib)"},
     {"--duplex", "Use duplex encoding for ladder AMO constraints"},
-    {"--ladder", "Use ladder encoding for ladder AMO constraints"},
+    {"--scl", "Use scl encoding for ladder AMO constraints"},
     {"--check-solution", "Calculate the antibandwidth of the found SAT solution and compare it to the actual width [default: false]"},
     {"-set-lb <new LB>", "Overwrite predefined LB with <new LB>, has to be at least 2"},
     {"-set-ub <new UB>", "Overwrite predefined UB with <new UB>, has to be positive"},
@@ -143,9 +143,9 @@ int main(int argc, char **argv)
         {
             ladder_amo_enc->enc_choice = EncodeType::duplex;
         }
-        else if (argv[i] == std::string("--ladder"))
+        else if (argv[i] == std::string("--scl"))
         {
-            ladder_amo_enc->enc_choice = EncodeType::ladder;
+            ladder_amo_enc->enc_choice = EncodeType::scl;
         }
         else if (argv[i] == std::string("--card"))
         {
