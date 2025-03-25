@@ -1,5 +1,5 @@
 OBJDIR=build
-OBJECTS= utils.o ladder_encoder.o bdd.o duplex_encoder.o product_encoder.o card_encoder.o bdd_encoder.o naive_encoder.o seq_encoder.o reduced_encoder.o encoder.o clause_cont.o cadical_clauses.o ladder_amo_encoder.o
+OBJECTS= utils.o scl_encoder.o bdd.o duplex_encoder.o product_encoder.o card_encoder.o bdd_encoder.o naive_encoder.o seq_encoder.o reduced_encoder.o encoder.o clause_cont.o cadical_clauses.o ladder_amo_encoder.o
 OBJS = $(patsubst %.o,$(OBJDIR)/%.o,$(OBJECTS))
 
 SRCDIR=src
@@ -32,10 +32,10 @@ all : $(OBJDIR)/main.o
 $(OBJDIR)/main.o : main.cpp $(OBJS) $(SRCDIR)/ladder_amo_encoder.h
 	g++ $(FLAGS) $(STANDARD) -I$(CADICAL_INC) -c $< -o $@
 
-$(OBJDIR)/ladder_amo_encoder.o : $(SRCDIR)/ladder_amo_encoder.cpp $(SRCDIR)/ladder_amo_encoder.h $(SRCDIR)/ladder_encoder.h $(SRCDIR)/duplex_encoder.h $(SRCDIR)/product_encoder.h $(SRCDIR)/card_encoder.h $(SRCDIR)/bdd_encoder.h $(SRCDIR)/reduced_encoder.h $(SRCDIR)/naive_encoder.h $(SRCDIR)/seq_encoder.h $(SRCDIR)/utils.h $(SRCDIR)/clause_cont.h $(SRCDIR)/cadical_clauses.h
+$(OBJDIR)/ladder_amo_encoder.o : $(SRCDIR)/ladder_amo_encoder.cpp $(SRCDIR)/ladder_amo_encoder.h $(SRCDIR)/scl_encoder.h $(SRCDIR)/duplex_encoder.h $(SRCDIR)/product_encoder.h $(SRCDIR)/card_encoder.h $(SRCDIR)/bdd_encoder.h $(SRCDIR)/reduced_encoder.h $(SRCDIR)/naive_encoder.h $(SRCDIR)/seq_encoder.h $(SRCDIR)/utils.h $(SRCDIR)/clause_cont.h $(SRCDIR)/cadical_clauses.h
 	g++ $(FLAGS) $(STANDARD) -I$(CADICAL_INC) -c $< -o $@
 
-$(OBJDIR)/ladder_encoder.o : $(SRCDIR)/ladder_encoder.cpp $(SRCDIR)/ladder_encoder.h $(SRCDIR)/encoder.h
+$(OBJDIR)/scl_encoder.o : $(SRCDIR)/scl_encoder.cpp $(SRCDIR)/scl_encoder.h $(SRCDIR)/encoder.h
 	g++ $(FLAGS) $(STANDARD) -c $< -o $@
 
 $(OBJDIR)/duplex_encoder.o : $(SRCDIR)/duplex_encoder.cpp $(SRCDIR)/duplex_encoder.h $(SRCDIR)/encoder.h $(SRCDIR)/bdd.h

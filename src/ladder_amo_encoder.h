@@ -5,7 +5,7 @@
 
 #include "clause_cont.h"
 #include "cadical_clauses.h"
-#include "ladder_encoder.h"
+#include "scl_encoder.h"
 #include "duplex_encoder.h"
 #include "product_encoder.h"
 #include "reduced_encoder.h"

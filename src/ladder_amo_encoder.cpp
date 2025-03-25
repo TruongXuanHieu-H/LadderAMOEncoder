@@ -128,7 +128,7 @@ namespace SINGLELADDERAMO
             break;
         case scl:
             std::cout << "c Initializing a Ladder encoder with n = " << n << "." << std::endl;
-            enc = new LadderEncoder(cc, vh);
+            enc = new SCLEncoder(cc, vh);
             break;
         case card:
             std::cout << "c Initializing a Cardinality network encoder with n = " << n << "." << std::endl;
@@ -221,9 +221,7 @@ namespace SINGLELADDERAMO
         for (int i = 0; i < n; i++)
         {
             solution[i] = solver->val(i + 1) > 0;
-            std::cout << solution[i] << " ";
         }
-        std::cout << "\n";
 
         int max_count_true = 1;
         for (int i = 0; i < n - w + 1; i++)
