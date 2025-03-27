@@ -25,8 +25,8 @@ CADICAL_LIB_DIR=./cadical/
 CADICAL_LIB=-lcadical
 
 all : $(OBJDIR)/main.o
-	cp src/card_amo.py $(OBJDIR)
-	cp src/bdd_amo.py $(OBJDIR)
+	cp src/card_ladder_amk.py $(OBJDIR)
+	cp src/bdd_ladder_amk.py $(OBJDIR)
 	g++ $(FLAGS) $(OBJDIR)/main.o $(OBJS) -L$(CADICAL_LIB_DIR) $(CADICAL_LIB) -o build/ladder_amo_enc
 
 $(OBJDIR)/main.o : main.cpp $(OBJS) $(SRCDIR)/ladder_amo_encoder.h
