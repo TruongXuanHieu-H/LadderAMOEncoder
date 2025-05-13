@@ -19,8 +19,5 @@ Main syntax: `./ladder_amo_enc <number_of_elements> [option_1, option_2, ...]`
 
 Use `./ladder_amo_enc --help` to see all the avaiable options.
 
-The architecture of this tool is constructed by:
-- Input handler: Read the config and input.
-- SAT solver: CaDiCaL version 1.2.1.
-- Encoding handler: Create corresponding encoder based on the given configs, call the solver and export the output.
-- Encoders: The encode strategies.
+Our experimental results can be found in ./build/report
+The experimental results for each encoding are stored in a corresponding text file, using the format <ladder-width>: <solve-time>.
