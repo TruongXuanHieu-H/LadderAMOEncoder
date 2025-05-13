@@ -21,4 +21,4 @@ Use `./ladder_amo_enc --help` to see all the avaiable options.
 
 Our experimental results can be found in ./build/report
 
-The experimental results for each encoding are stored in a corresponding text file, using the format <ladder-width>: <solve-time>.
+The experimental results for each encoding are stored in a corresponding text file, using the format `<ladder-width>: <solve-time>`.
