@@ -27,7 +27,7 @@ namespace SINGLELADDERAMO
         duplex,
         scl,
         card,
-        adder_network,
+        adder,
     };
 
     const std::unordered_map<EncodeType, std::string> encode_type_map = {
@@ -39,7 +39,7 @@ namespace SINGLELADDERAMO
         {duplex, "duplex"},
         {scl, "scl"},
         {card, "card"},
-        {adder_network, "adder-network"},
+        {adder, "adder"},
     };
 
     class LadderAMOEncoder
