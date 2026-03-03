@@ -3,7 +3,7 @@
 # Fixed n value
 n=1000
 
-encoders=(--reduced --seq --BDD --product --card --duplex --scl)
+encoders=(--adder)
 
 # w runs from 1 to 1000
 w_values=$(seq 2 1 1000)
