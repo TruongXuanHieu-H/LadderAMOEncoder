@@ -66,7 +66,7 @@ namespace SINGLELADDERAMO
     protected:
         int n;
         VarHandler *vh;
-        Encoder *enc;
+        BaseEncoder *enc;
         ClauseContainer *cc;
         CaDiCaL::Solver *solver;
 

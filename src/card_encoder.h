@@ -7,7 +7,7 @@ namespace SINGLELADDERAMO
 {
     typedef std::vector<int>::iterator vec_int_it;
 
-    class CardinalityEncoder : public Encoder
+    class CardinalityEncoder : public BaseEncoder
     {
     public:
         CardinalityEncoder(ClauseContainer *cc, VarHandler *vh);

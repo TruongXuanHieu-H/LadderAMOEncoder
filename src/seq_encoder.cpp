@@ -11,7 +11,7 @@
 namespace SINGLELADDERAMO
 {
 
-    SeqEncoder::SeqEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : Encoder(clause_container, var_handler)
+    SeqEncoder::SeqEncoder(ClauseContainer *clause_container, VarHandler *var_handler) : BaseEncoder(clause_container, var_handler)
     {
     }
 

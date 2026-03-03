@@ -7,7 +7,7 @@
 
 namespace SINGLELADDERAMO
 {
-    class DuplexEncoder : public Encoder
+    class DuplexEncoder : public BaseEncoder
     {
     public:
         DuplexEncoder(ClauseContainer *clause_container, VarHandler *var_handler);

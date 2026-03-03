@@ -8,7 +8,7 @@ namespace SINGLELADDERAMO
 {
     typedef std::deque<int>::iterator deq_int_it;
 
-    class ReducedEncoder : public Encoder
+    class ReducedEncoder : public BaseEncoder
     {
     public:
         ReducedEncoder(ClauseContainer *cc, VarHandler *vh);

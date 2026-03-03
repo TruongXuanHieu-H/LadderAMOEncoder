@@ -7,7 +7,7 @@ namespace SINGLELADDERAMO
 {
   typedef std::vector<int>::iterator vec_int_it;
 
-  class ProductEncoder : public Encoder
+  class ProductEncoder : public BaseEncoder
   {
   public:
     ProductEncoder(ClauseContainer *cc, VarHandler *vh);
