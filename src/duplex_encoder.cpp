@@ -62,8 +62,8 @@ namespace SINGLELADDERAMO
                 std::deque<int> window_vars(p2 - p1 + 1);
                 std::iota(window_vars.begin(), window_vars.end(), p1);
 
-                int fwd_amo_id;
-                int fwd_amz_id;
+                int fwd_amo_id = -1;
+                int fwd_amz_id = -1;
                 if (gw != number_of_windows - 1)
                 {
                     fwd_amo_id = build_amo(window_vars);
@@ -72,8 +72,8 @@ namespace SINGLELADDERAMO
                     fwd_amz_roots[i].push_back(fwd_amz_id);
                 }
 
-                int bwd_amo_id;
-                int bwd_amz_id;
+                int bwd_amo_id = -1;
+                int bwd_amz_id = -1;
                 if (gw != 0)
                 {
                     std::reverse(std::begin(window_vars), std::end(window_vars));

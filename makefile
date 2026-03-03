@@ -1,82 +1,105 @@
-OBJDIR=build
-OBJECTS= utils.o scl_encoder.o bdd.o duplex_encoder.o product_encoder.o card_encoder.o bdd_encoder.o naive_encoder.o seq_encoder.o reduced_encoder.o encoder.o clause_cont.o cadical_clauses.o ladder_amo_encoder.o
-OBJS = $(patsubst %.o,$(OBJDIR)/%.o,$(OBJECTS))
+# ================================
+# Project directories
+# ================================
+SRCDIR  := src
+OBJDIR  := build/obj
+BINDIR  := build
 
-SRCDIR=src
+TARGET  := $(BINDIR)/ladder_amo_enc
 
-# FLAGS= -Wall -Werror -Wextra -O3 -DNDEBUG
-# FLAGS= -Wall -Werror -Wextra -g -O0
+# ================================
+# Compiler
+# ================================
+CXX       := g++
+STANDARD  := -std=c++23
 
-DEBUG_FLAGS= -Wall -Werror -Wextra -g -O0
-RELEASE_FLAGS= -Wall -Werror -Wextra -O3 -DNDEBUG
+# ================================
+# Compiler flags
+# ================================
+IGNORE_ASSERTVARS := -Wno-unused-but-set-variable
+CXXFLAGS := -Wall -Wextra -Werror -O3 -DNDEBUG $(STANDARD) $(IGNORE_ASSERTVARS)
 
-# Default mode: release
-FLAGS= $(RELEASE_FLAGS)
+# ================================
+# CaDiCaL
+# ================================
+CADICAL_INC     := ./cadical
+CADICAL_LIB_DIR := ./cadical
+CADICAL_LIB     := -lcadical
 
-# Target build debug
-debug: FLAGS=$(DEBUG_FLAGS)
-debug: clean all
+# ================================ 
+# PBLib 
+# ================================ 
+PBLIB_INC := /usr/local/include 
+PBLIB_LIB_DIR := /usr/local/lib 
+PBLIB_LIB := -lpb
 
-IGNORE_ASSERTVARS= -Wno-unused-but-set-variable
-STANDARD= -std=c++11
+INCLUDES := -I$(CADICAL_INC) -I$(PBLIB_INC)
 
-CADICAL_INC=./cadical/
-CADICAL_LIB_DIR=./cadical/
-CADICAL_LIB=-lcadical
+# ================================
+# Source files
+# ================================
+SOURCES := \
+	main.cpp \
+	bdd_encoder.cpp \
+	bdd.cpp \
+	cadical_clauses.cpp \
+	card_encoder.cpp \
+	clause_cont.cpp \
+	duplex_encoder.cpp \
+	encoder.cpp \
+	ladder_amo_encoder.cpp \
+	naive_encoder.cpp \
+	product_encoder.cpp \
+	reduced_encoder.cpp \
+	scl_encoder.cpp \
+	seq_encoder.cpp \
+	utils.cpp
 
-all : $(OBJDIR)/main.o
-	cp src/card_ladder_amk.py $(OBJDIR)
-	cp src/bdd_ladder_amk.py $(OBJDIR)
-	g++ $(FLAGS) $(OBJDIR)/main.o $(OBJS) -L$(CADICAL_LIB_DIR) $(CADICAL_LIB) -o build/ladder_amo_enc
+# ================================
+# Object files
+# ================================
+OBJECTS := $(SOURCES:%.cpp=$(OBJDIR)/%.o)
 
-$(OBJDIR)/main.o : main.cpp $(OBJS) $(SRCDIR)/ladder_amo_encoder.h
-	g++ $(FLAGS) $(STANDARD) -I$(CADICAL_INC) -c $< -o $@
+# ================================
+# Default target
+# ================================
+.PHONY: all
+all: $(TARGET)
 
-$(OBJDIR)/ladder_amo_encoder.o : $(SRCDIR)/ladder_amo_encoder.cpp $(SRCDIR)/ladder_amo_encoder.h $(SRCDIR)/scl_encoder.h $(SRCDIR)/duplex_encoder.h $(SRCDIR)/product_encoder.h $(SRCDIR)/card_encoder.h $(SRCDIR)/bdd_encoder.h $(SRCDIR)/reduced_encoder.h $(SRCDIR)/naive_encoder.h $(SRCDIR)/seq_encoder.h $(SRCDIR)/utils.h $(SRCDIR)/clause_cont.h $(SRCDIR)/cadical_clauses.h
-	g++ $(FLAGS) $(STANDARD) -I$(CADICAL_INC) -c $< -o $@
+# ================================
+# Link
+# ================================
+$(TARGET): $(OBJECTS)
+	@mkdir -p $(BINDIR)
+	$(CXX) $(CXXFLAGS) $^ -L$(CADICAL_LIB_DIR) $(CADICAL_LIB) -L$(PBLIB_LIB_DIR) $(PBLIB_LIB) -o $@
 
-$(OBJDIR)/scl_encoder.o : $(SRCDIR)/scl_encoder.cpp $(SRCDIR)/scl_encoder.h $(SRCDIR)/encoder.h
-	g++ $(FLAGS) $(STANDARD) -c $< -o $@
+# ================================
+# Compile rules
+# ================================
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/duplex_encoder.o : $(SRCDIR)/duplex_encoder.cpp $(SRCDIR)/duplex_encoder.h $(SRCDIR)/encoder.h $(SRCDIR)/bdd.h
-	g++ $(FLAGS) $(IGNORE_ASSERTVARS) $(STANDARD) -c $< -o $@
+# main.cpp in root
+$(OBJDIR)/main.o: main.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/product_encoder.o : $(SRCDIR)/product_encoder.cpp $(SRCDIR)/product_encoder.h $(SRCDIR)/encoder.h
-	g++ $(FLAGS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/card_encoder.o : $(SRCDIR)/card_encoder.cpp $(SRCDIR)/card_encoder.h $(SRCDIR)/encoder.h
-	g++ $(FLAGS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/bdd_encoder.o : $(SRCDIR)/bdd_encoder.cpp $(SRCDIR)/bdd_encoder.h $(SRCDIR)/encoder.h
-	g++ $(FLAGS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/reduced_encoder.o : $(SRCDIR)/reduced_encoder.cpp $(SRCDIR)/reduced_encoder.h $(SRCDIR)/encoder.h $(SRCDIR)/bdd.h
-	g++ $(FLAGS) $(IGNORE_ASSERTVARS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/naive_encoder.o : $(SRCDIR)/naive_encoder.cpp $(SRCDIR)/naive_encoder.h $(SRCDIR)/encoder.h $(SRCDIR)/bdd.h
-	g++ $(FLAGS) $(IGNORE_ASSERTVARS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/seq_encoder.o : $(SRCDIR)/seq_encoder.cpp $(SRCDIR)/seq_encoder.h $(SRCDIR)/encoder.h $(SRCDIR)/bdd.h
-	g++ $(FLAGS) $(IGNORE_ASSERTVARS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/cadical_clauses.o : $(SRCDIR)/cadical_clauses.cpp $(SRCDIR)/cadical_clauses.h $(SRCDIR)/clause_cont.h
-	g++ $(FLAGS) $(STANDARD) -I$(CADICAL_INC) -c $< -o $@
-
-$(OBJDIR)/clause_cont.o : $(SRCDIR)/clause_cont.cpp $(SRCDIR)/clause_cont.h $(SRCDIR)/utils.h
-	g++ $(FLAGS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/encoder.o : $(SRCDIR)/encoder.cpp $(SRCDIR)/encoder.h $(SRCDIR)/clause_cont.h
-	g++ $(FLAGS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/utils.o : $(SRCDIR)/utils.cpp $(SRCDIR)/utils.h
-	g++ $(FLAGS) $(STANDARD) -c $< -o $@
-
-$(OBJDIR)/bdd.o : $(SRCDIR)/bdd.cpp $(SRCDIR)/bdd.h
-	g++ $(FLAGS) $(IGNORE_ASSERTVARS) $(STANDARD) -c $< -o $@
-
-#.PHONY : clean
+# ================================
+# Clean
+# ================================
+.PHONY: clean
 clean:
-	rm -f *.a $(OBJDIR)/*.o *~ *.out  $(OBJDIR)/ladder_amo_enc
+	rm -rf $(OBJDIR) $(TARGET) *.a *~ *.out
 
+# ================================
+# Archive
+# ================================
+.PHONY: tar
 tar:
-	tar cfv ladder_amo_enc.tar main.cpp makefile $(SRCDIR)/*.cpp $(SRCDIR)/*.h cadical/*.a cadical/*.hpp
+	tar cfv ladder_amo_enc.tar \
+		$(SRCDIR) \
+		main.cpp \
+		makefile \
+		$(CADICAL_LIB_DIR)/*.a \
+		$(CADICAL_LIB_DIR)/*.hpp
