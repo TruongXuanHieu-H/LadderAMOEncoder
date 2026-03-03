@@ -34,6 +34,8 @@ def bdd(x):
 
 # Define the product expression
 
+def adder(x):
+    return N(x) * x
 
 def card(x):
     return N(x) * x
@@ -61,6 +63,7 @@ def scl(x):
 x_values = np.linspace(2, 999, 998)
 
 # Calculate y values using the expressions
+adder_values = adder(x_values)
 reduced_values = reduced(x_values)
 seq_values = seq(x_values)
 bdd_values = bdd(x_values)
@@ -78,20 +81,22 @@ def custom_formatter(y, pos):
 
 # Create the plot
 # plt.figure(figsize=(10, 10))
-plt.plot(x_values, reduced_values, linestyle=':',
-         label="Pairwise", color='blue', linewidth=2)
-plt.plot(x_values, seq_values, linestyle='--',
-         label="Seq", color='orange', linewidth=2)
+plt.plot(x_values, adder_values, linestyle='--',
+         label="Adder", color='teal', linewidth=2)
 plt.plot(x_values, bdd_values, linestyle='-.',
          label="BDD", color='purple', linewidth=2)
 plt.plot(x_values, card_values, linestyle=':',
          label="Card", color='green', linewidth=2)
-plt.plot(x_values, product_values, linestyle='--',
-         label="Product", color='red', linewidth=2)
 plt.plot(x_values, duplex_values, linestyle='-.',
          label="Duplex", color='magenta', linewidth=2)
+plt.plot(x_values, reduced_values, linestyle=':',
+         label="Pairwise", color='blue', linewidth=2)
+plt.plot(x_values, product_values, linestyle='--',
+         label="Product", color='red', linewidth=2)
 plt.plot(x_values, scl_values, linestyle='-',
          label="SCL", color='black', linewidth=2)
+plt.plot(x_values, seq_values, linestyle='--',
+         label="Seq", color='orange', linewidth=2)
 
 plt.xlabel('#Width')
 plt.ylabel('#Clauses')
