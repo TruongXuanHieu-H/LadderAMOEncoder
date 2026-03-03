@@ -39,4 +39,8 @@ namespace SINGLELADDERAMO
         return next_to_assign - first_assigned_id;
     };
 
+    void VarHandler::set_next_to_assign(int next_id)
+    {
+        next_to_assign = next_id;
+    };
 }
