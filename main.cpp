@@ -147,6 +147,10 @@ int main(int argc, char **argv)
         {
             ladder_amo_enc->enc_choice = EncodeType::scl;
         }
+        else if (argv[i] == std::string("--adder-network"))
+        {
+            ladder_amo_enc->enc_choice = EncodeType::adder_network;
+        }
         else if (argv[i] == std::string("--card"))
         {
             ladder_amo_enc->enc_choice = EncodeType::card;

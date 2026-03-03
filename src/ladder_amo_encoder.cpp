@@ -134,6 +134,10 @@ namespace SINGLELADDERAMO
             std::cout << "c Initializing a Cardinality network encoder with n = " << n << "." << std::endl;
             enc = new CardinalityEncoder(cc, vh);
             break;
+        case adder_network:
+            std::cout << "c Initializing an Adder network encoder with n = " << n << "." << std::endl;
+            enc = new AdderEncoder(cc, vh);
+            break;
         default:
             std::cout << "c Initializing a null encoder with n = " << n << "." << std::endl;
             break;

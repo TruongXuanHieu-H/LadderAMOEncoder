@@ -40,6 +40,7 @@ INCLUDES := -I$(CADICAL_INC) -I$(PBLIB_INC)
 # ================================
 SOURCES := \
 	main.cpp \
+	adder_encoder.cpp \
 	bdd_encoder.cpp \
 	bdd.cpp \
 	cadical_clauses.cpp \

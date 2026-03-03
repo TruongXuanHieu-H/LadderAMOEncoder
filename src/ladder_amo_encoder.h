@@ -13,6 +13,7 @@
 #include "seq_encoder.h"
 #include "card_encoder.h"
 #include "bdd_encoder.h"
+#include "adder_encoder.h"
 
 namespace SINGLELADDERAMO
 {
@@ -26,6 +27,7 @@ namespace SINGLELADDERAMO
         duplex,
         scl,
         card,
+        adder_network,
     };
 
     const std::unordered_map<EncodeType, std::string> encode_type_map = {
@@ -37,6 +39,7 @@ namespace SINGLELADDERAMO
         {duplex, "duplex"},
         {scl, "scl"},
         {card, "card"},
+        {adder_network, "adder-network"},
     };
 
     class LadderAMOEncoder
